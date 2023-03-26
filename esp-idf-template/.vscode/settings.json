@@ -1,63 +1,89 @@
 {
-  // Important!!!!!!! 
-  // for this to work You must add  "terminal.integrated.allowWorkspaceConfiguration":true
-  // in your user settings 
-  // see https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations 
-  // on how to locate your user settings
+  "cmake.configureOnOpen": false,
+  "terminal.integrated.defaultProfile.windows": "CMD_ESP32",
   "terminal.integrated.profiles.windows": {
-    "idf": {
-      "path": "${env:windir}/System32/cmd.exe",
-      "args": ["/k", "<%= IDF_PATH %>/export.bat"],
-      <% if(PYTHON_PATH) { %>
-      "env": {
-        "IDF_PYTHON_ENV_PATH" : "<%= PYTHON_PATH %>"
+      "PowerShell": {
+          "source": "PowerShell",
+          "icon": "terminal-powershell"
+      },
+      "Command Prompt": {
+          "path": [
+              "${env:windir}\\Sysnative\\cmd.exe",
+              "${env:windir}\\System32\\cmd.exe"
+          ],
+          "args": [],
+          "icon": "terminal-cmd"
+      },
+      "Git Bash": {
+          "source": "Git Bash"
+      },
+      "CMD_ESP32": {
+          "path": [
+              "${env:windir}\\Sysnative\\cmd.exe",
+              "${env:windir}\\System32\\cmd.exe"
+          ],
+          "args": [
+              "/k",
+      "C:/Espressif/idf_cmd_init.bat",
+      "esp-idf-57b6d67bb026a1bc6f3a56f94687e2fe"
+          ],
+          "icon": "terminal",
+          "color": "terminal.ansiYellow",
+          "overrideName": true
       }
-      <% } %>
-    }
   },
-  "terminal.integrated.profiles.linux": {
-    "idf": {
-      "path": "/bin/bash",
-      "args":["--init-file", "<%= IDF_PATH %>/export.sh", "-i"],
-      <% if(PYTHON_PATH) { %>
-        "env": {
-          "IDF_PYTHON_ENV_PATH" : "<%= PYTHON_PATH %>"
-        }
-        <% } %>
-    },
-  },
-  "terminal.integrated.profiles.osx": {
-    "idf": {
-      "path": "/bin/bash",
-      "args": ["--init-file", "<%= IDF_PATH %>/export.sh", "-i"],
-      <% if(PYTHON_PATH) { %>
-        "env": {
-          "IDF_PYTHON_ENV_PATH" : "<%= PYTHON_PATH %>"
-        }
-        <% } %>
-    },
-  },
-  // the following is being depricated and will be replaced.
-  "terminal.integrated.shell.windows": "cmd.exe",
-  <% if(PYTHON_PATH) { %>
-  "terminal.integrated.env.windows": {
-    "IDF_PYTHON_ENV_PATH" : "<%= PYTHON_PATH %>"
-  },
-  "terminal.integrated.env.osx": {
-    "IDF_PYTHON_ENV_PATH" : "<%= PYTHON_PATH %>"
-  },
-  "terminal.integrated.env.linux": {
-    "IDF_PYTHON_ENV_PATH" : "<%= PYTHON_PATH %>"
-  },
-  <% } %>
-  "terminal.integrated.shellArgs.windows": ["/k", "<%= IDF_PATH %>/export.bat"],
-  "terminal.integrated.shell.linux": "/bin/bash",
-  "terminal.integrated.shellArgs.linux": ["--init-file", "<%= IDF_PATH %>/export.sh", "-i"],
-  "terminal.integrated.shell.osx": "/bin/bash",
-  "terminal.integrated.shellArgs.osx": ["--init-file", "<%= IDF_PATH %>/export.sh", "-i"],
-  "files.associations": {
-    "*.md": "markdown",
-    "*.mdx": "tdx",
-    "stdio.h": "c"
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "block",
+  "terminal.integrated.shellIntegration.decorationsEnabled":"gutter",
+  "actionButtons": {
+      "commands": [
+          {
+              "name": "$(check-all) Build",
+              "color": "Yellow",
+              "command": "idf.py build",
+              "tooltip": "Build ESP32 Program",
+              "terminalName": "CMD ESP32",
+              "timeoutAfterCreate": 2500
+          },
+          {
+              "name": "$(run-all) Run",
+              "color": "Yellow",
+              "command": "idf.py flash -p ${port} -b 152000 monitor",
+              "tooltip": "Flash and monitor ESP32",
+              "terminalName": "CMD ESP32",
+              "timeoutAfterCreate": 2500
+          },
+          {
+              "name": "$(run) Flash",
+              "color": "Yellow",
+              "command": "idf.py flash -p ${port} -b 152000 monitor",
+              "tooltip": "Flash ESP32 only",
+              "terminalName": "CMD ESP32",
+              "timeoutAfterCreate": 2500
+          },
+          {
+              "name": "$(eye) Monitor",
+              "color": "Yellow",
+              "command": "idf.py flash -p ${port} -b 152000 monitor",
+              "tooltip": "Monitor ESP32 only",
+              "terminalName": "CMD ESP32",
+              "timeoutAfterCreate": 2500
+          },
+          {
+              "name": "$(settings-gear) Menuconfig",
+              "color": "Yellow",
+              "command": "idf.py menuconfig",
+              "tooltip": "Configure ESP32",
+              "terminalName": "CMD ESP32",
+              "timeoutAfterCreate": 2500
+          }
+      ],
+      "defaultColor": "Yellow",
+      "reloadButton": "↻",
+      "loadNpmCommands": false,
+      "customVars": {
+          "port": "COM1"  /* Can be used in command */,
+          "baudrate": 152000,
+      }
   }
 }
